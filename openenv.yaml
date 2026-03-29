@@ -1,0 +1,15 @@
+name: email-classification-env
+description: Email classification AI environment
+
+tasks:
+  - name: easy
+  - name: medium
+  - name: hard
+
+actions:
+  - id: 0
+    name: spam
+  - id: 1
+    name: important
+  - id: 2
+    name: promotion
