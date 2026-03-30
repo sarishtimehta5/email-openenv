@@ -1,36 +1,25 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 from environment import EmailEnv
 
-app = FastAPI(title="Email OpenEnv")
+app = FastAPI()
 
 env = EmailEnv()
 
-class ActionInput(BaseModel):
-    action: int
-
 @app.get("/")
 def home():
-    return {"status": "running"}
+    return {"message": "Email OpenEnv running"}
 
-@app.get("/reset")
-def reset(task: str = "easy"):
-    state = env.reset(task)
-    return {
-        "state": state,
-        "task": task
-    }
+@app.post("/reset")
+def reset():
+    state = env.reset()
+    return {"state": state}
 
 @app.post("/step")
-def step(input: ActionInput):
-    state, reward, done, info = env.step(input.action)
+def step(action: dict):
+    next_state, reward, done, info = env.step(action)
     return {
-        "state": state,
+        "next_state": next_state,
         "reward": reward,
         "done": done,
         "info": info
     }
-
-@app.get("/state")
-def state():
-    return {"state": env.state()}
