@@ -56,3 +56,5 @@ class EmailEnv:
 
     def state(self) -> str:
         return self.current_email
+        def reset(self):
+            return self.state
